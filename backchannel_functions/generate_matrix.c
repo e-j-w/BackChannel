@@ -27,15 +27,17 @@ void computeWeights(bc_par * p)
 	
 	for(i=0;i<p->numGateData;i++)
 		for(j=0;j<p->numGateData;j++)
-			for(k=0;k<p->numParticles;k++)
-				{
-					p->weights[i][j]=1.;
-					for(l=0;l<p->gateData[i].gateCh[k];l++)
-						p->weights[i][j]=p->weights[i][j]*p->eff[k];
-					for(l=0;l<(p->gateData[j].gateCh[k] - p->gateData[i].gateCh[k]);l++)
-						p->weights[i][j]=p->weights[i][j]*(1.- p->eff[k]);
-					p->weights[i][j]=p->weights[i][j]*choose(p->gateData[j].gateCh[k],p->gateData[i].gateCh[k]);
-				}
+			{
+				p->weights[i][j]=1.;
+				for(k=0;k<p->numParticles;k++)
+					{
+						for(l=0;l<p->gateData[j].gateCh[k];l++)
+							p->weights[i][j]=p->weights[i][j]*p->eff[k];
+						for(l=0;l<(p->gateData[i].gateCh[k] - p->gateData[j].gateCh[k]);l++)
+							p->weights[i][j]=p->weights[i][j]*(1.- p->eff[k]);
+						p->weights[i][j]=p->weights[i][j]*choose(p->gateData[i].gateCh[k],p->gateData[j].gateCh[k]);
+					}
+			}
 	
 	/*for(i=0;i<gateP;i++)
 		PEffFactor=PEffFactor*PEff;
@@ -224,10 +226,16 @@ void readParFile(const char * fileName, bc_par * p)
 					readDataFile(opt[i]->par[opt[i]->numPar-1], 1, p->gateData[p->numGateData].hist);//only one spectrum specified...
 					p->numGateData++;
 				}
+			else if(strcmp(opt[i]->name,"OUT_SP")==0)
+				{
+					opt[i]->par[0][strcspn(opt[i]->par[0], "\r\n")] = 0;//strips newline characters from the filename
+					p->outFilename=opt[i]->par[0];
+				}
 		}
 	
 	printf("Parameters read from file: %s\n",fileName);
 	printf("Number of particle types: %i\n",p->numParticles);
 	printf("Number of gate spectra: %i\n",p->numGateData);
+	printf("Will write output data to file: %s\n",p->outFilename);
   
 }

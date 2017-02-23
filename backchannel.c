@@ -2,6 +2,7 @@
 #include "backchannel.h"
 //functions and logic
 #include "read_data.c"
+#include "write_data.c"
 #include "generate_matrix.c"
 
 int main(int argc, char *argv[])

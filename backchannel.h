@@ -28,9 +28,11 @@ typedef struct
   int sortCh[MAXNUMPARTICLES]; //number of particles in the channel to be sorted
   double eff[MAXNUMPARTICLES]; //particle detection efficiencies
   int numGateData;
+  int numSpectra;//number of spectra in the gata data files (eg. for .mca files)
   gate_sp gateData[MAXNUMGATESP];
   double weights[MAXNUMGATESP][MAXNUMGATESP];
   double invweights[MAXNUMGATESP][MAXNUMGATESP];
+  char *outFilename;//output spectrum filename
 }bc_par; //parameters
 
 #endif
