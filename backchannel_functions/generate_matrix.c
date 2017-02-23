@@ -47,21 +47,86 @@ void computeWeights(bc_par * p)
 		AEffFactor=AEffFactor*AEff;
 	return choose(chP,gateP)*PEffFactor*choose(chA,gateA)*AEffFactor;*/
 
+	
+
+}
+
+void computeInvWeights(bc_par * p)
+{
+	int i,j;
+	
+	lin_eq_type *li=(lin_eq_type*)calloc(1,sizeof(lin_eq_type));
+	li->dim=p->numGateData;
+	for(i=0;i<p->numGateData;i++)
+		{
+			li->vector[i]=1.;
+			for(j=0;j<p->numParticles;j++)
+				if(p->gateData[i].gateCh[j]!=p->sortCh[j])
+					{
+						li->vector[i]=0.;
+						break;
+					}
+		}
+	for(i=0;i<p->numGateData;i++)
+		for(j=0;j<p->numGateData;j++)
+			li->matrix[i][j]=p->weights[i][j];
+	
+	printf("Vector data:\n");
+	for(i=0;i<p->numGateData;i++)
+		printf("%Lf\n",li->vector[i]);
+	
+	if(!(solve_lin_eq(li)==1))
+		{
+			printf("ERROR: cannot solve system of equations!\n");
+			exit(-1);
+		}
+	
+	printf("Soln data:\n");
+	for(i=0;i<p->numGateData;i++)
+		printf("%Lf\n",li->solution[i]);
+	
+	for(i=0;i<p->numGateData;i++)
+		for(j=0;j<p->numGateData;j++)
+			p->invweights[i][j]=li->inv_matrix[i][j];
+	
+	free(li);
+	
 }
 
 void printWeights(bc_par * p)
 {
 	int i,j;
 	
-	printf("CHANNEL  MATRIX                                       GATE\n");
+	printf("MATRIX\n");
 	for(i=0;i<p->numGateData;i++)
 		{
+			printf("CHANNEL= ");
 			for(j=0;j<p->numParticles;j++)
 				printf("%i ",p->gateData[i].gateCh[j]);
-			printf("    ");
+			printf("  MATRIX= ");
 			for(j=0;j<p->numGateData;j++)
-				printf("%6.3f ",p->weights[i][j]);
-			printf("    ");
+				printf("%7.3f ",p->weights[i][j]);
+			printf("  GATE= ");
+			for(j=0;j<p->numParticles;j++)
+				printf("%i ",p->gateData[i].gateCh[j]);
+			printf("\n");
+		}
+}
+
+void printInvWeights(bc_par * p)
+{
+	int i,j;
+	
+	printf("INV MATRIX\n");
+	for(i=0;i<p->numGateData;i++)
+		{
+			printf("CHANNEL= ");
+			for(j=0;j<p->numParticles;j++)
+				printf("%i ",p->gateData[i].gateCh[j]);
+			printf("  MATRIX= ");
+			for(j=0;j<p->numGateData;j++)
+				printf("%7.3f ",p->invweights[i][j]);
+			printf("  GATE= ");
 			for(j=0;j<p->numParticles;j++)
 				printf("%i ",p->gateData[i].gateCh[j]);
 			printf("\n");

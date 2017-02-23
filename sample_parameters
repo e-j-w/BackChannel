@@ -4,9 +4,9 @@ EFF 0.8 0.4
 GATE_SP 0 1 0p1a.mca
 GATE_SP 0 2 0p2a.mca
 GATE_SP 0 3 0p3a.mca
-GATE_SP 2 1 2p1a.mca
-GATE_SP 1 1 1p1a.mca
-GATE_SP 2 0 2p0a.mca
+#GATE_SP 2 1 2p1a.mca
+#GATE_SP 1 1 1p1a.mca
+#GATE_SP 2 0 2p0a.mca
 
 
 <---END_OF_PARAMETERS--->

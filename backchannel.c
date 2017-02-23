@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
   readParFile(argv[1],p);
   computeWeights(p);
   printWeights(p);
+  computeInvWeights(p);
+  printInvWeights(p);
 	
 	/*char fileName[256],str[8];
 	int i;

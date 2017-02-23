@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "lin_eq_solver.h"
+
 //.mca format
 #define S32K        32768
 #define NSPECT      100
@@ -28,6 +30,7 @@ typedef struct
   int numGateData;
   gate_sp gateData[MAXNUMGATESP];
   double weights[MAXNUMGATESP][MAXNUMGATESP];
+  double invweights[MAXNUMGATESP][MAXNUMGATESP];
 }bc_par; //parameters
 
 #endif
