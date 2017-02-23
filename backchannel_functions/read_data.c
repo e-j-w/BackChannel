@@ -1,8 +1,25 @@
-//function reads an .mca file into a double array and returns the array
-void readMCA(FILE * inp, const char * filename, const int numSpec, double outHist[NSPECT][S32K])
+//function reads an .mca file into a double array and returns the number of spectra read in
+int readMCA(FILE * inp, const char * filename, double outHist[NSPECT][S32K])
 {
 	int i,j;
 	int tmpHist[S32K];
+	
+	//get the number of spectra in the .mca file
+  int numSpec=S32K;
+  for (i=0;i<numSpec;i++)
+    if(fread(tmpHist,S32K*sizeof(int),1,inp)!=1)
+      {
+        numSpec=i;
+        break;
+      }
+  fclose(inp);
+  printf("number of spectra in file '%s': %i\n",filename,numSpec);
+	if((inp=fopen(filename,"r"))==NULL) //reopen the file
+    {
+      printf("ERROR: Cannot open the input file: %s\n",filename);
+      printf("Check that the file exists.\n");
+      exit(-1);
+    }
 
 	for (i=0;i<numSpec;i++)
 		{
@@ -16,10 +33,12 @@ void readMCA(FILE * inp, const char * filename, const int numSpec, double outHis
 				for(j=0;j<S32K;j++)
 					outHist[i][j]=(double)tmpHist[j];
 		}
+	
+	return numSpec;
   
 }
 
-//function reads an .spe file into a double array and returns the array
+/*//function reads an .spe file into a double array and returns the array
 void readSPE(FILE * inp, const char * filename, const int numSpec, double outHist[NSPECT][S32K])
 {
 	int i;
@@ -48,10 +67,11 @@ void readSPE(FILE * inp, const char * filename, const int numSpec, double outHis
   for(i=1;i<numSpec;i++)
   	memcpy(outHist[i],outHist[0],S32K*sizeof(double));
   
-}
+}*/
 
-void readDataFile(const char * filename, const int numSpec, double outHist[NSPECT][S32K])
+int readDataFile(const char * filename, double outHist[NSPECT][S32K])
 {
+	int numSpec;
 	FILE *inp;
 	if((inp=fopen(filename,"r"))==NULL)
     {
@@ -62,15 +82,16 @@ void readDataFile(const char * filename, const int numSpec, double outHist[NSPEC
 	
 	const char *dot = strrchr(filename, '.');//get the file extension
 	if(strcmp(dot + 1,"mca")==0)
-		readMCA(inp, filename, numSpec, outHist);
-	else if(strcmp(dot + 1,"spe")==0)
-		readSPE(inp, filename, numSpec, outHist);
+		numSpec=readMCA(inp, filename, outHist);
+	/*else if(strcmp(dot + 1,"spe")==0)
+		readSPE(inp, filename, numSpec, outHist);*/
 	else
 		{
 			printf("ERROR: Improper type of input file: %s\n",filename);
-      printf("Integer array (.mca) and radware (.spe) files are supported.\n");
+      printf("Integer array (.mca) files are supported.\n");
       exit(-1);
 		}
 	
 	fclose(inp);
+	return numSpec;
 }

@@ -32,7 +32,9 @@ typedef struct
   gate_sp gateData[MAXNUMGATESP];
   double weights[MAXNUMGATESP][MAXNUMGATESP];
   double invweights[MAXNUMGATESP][MAXNUMGATESP];
+  double soln[MAXNUMGATESP];
   char *outFilename;//output spectrum filename
+  double outHist[NSPECT][S32K];//output spectrum
 }bc_par; //parameters
 
 #endif

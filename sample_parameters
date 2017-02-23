@@ -1,6 +1,5 @@
 SORT_CH 0 2
-EFF 0.4 0.8
-
+EFF 0.4 0.318
 
 GATE_SP 0 1 0p1a.mca
 GATE_SP 0 2 0p2a.mca
@@ -14,5 +13,4 @@ OUT_SP 0p2ach.mca
 
 <---END_OF_PARAMETERS--->
 
-This is a parameter file for the backchannel code.
 

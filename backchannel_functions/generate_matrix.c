@@ -82,10 +82,13 @@ void computeInvWeights(bc_par * p)
 			printf("ERROR: cannot solve system of equations!\n");
 			exit(-1);
 		}
+		
+	for(i=0;i<p->numGateData;i++)	
+		p->soln[i]=(double)li->solution[i];
 	
 	printf("Soln data:\n");
 	for(i=0;i<p->numGateData;i++)
-		printf("%Lf\n",li->solution[i]);
+		printf("%f\n",p->soln[i]);
 	
 	for(i=0;i<p->numGateData;i++)
 		for(j=0;j<p->numGateData;j++)
@@ -223,7 +226,7 @@ void readParFile(const char * fileName, bc_par * p)
 					if((opt[i]->numPar-1)>p->numParticles)
 						p->numParticles=opt[i]->numPar-1;
 					opt[i]->par[opt[i]->numPar-1][strcspn(opt[i]->par[opt[i]->numPar-1], "\r\n")] = 0;//strips newline characters from the filename
-					readDataFile(opt[i]->par[opt[i]->numPar-1], 1, p->gateData[p->numGateData].hist);//only one spectrum specified...
+					p->numSpectra=readDataFile(opt[i]->par[opt[i]->numPar-1], p->gateData[p->numGateData].hist);
 					p->numGateData++;
 				}
 			else if(strcmp(opt[i]->name,"OUT_SP")==0)

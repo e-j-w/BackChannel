@@ -22,24 +22,17 @@ int main(int argc, char *argv[])
   printWeights(p);
   computeInvWeights(p);
   printInvWeights(p);
+  
+  int i,j,k;
+  for(i=0;i<p->numSpectra;i++)
+  	for(j=0;j<S32K;j++)
+			{
+				p->outHist[i][j]=0.;
+				for(k=0;k<p->numGateData;k++)
+					p->outHist[i][j]+=p->soln[k]*p->gateData[k].hist[i][j];
+			}
 	
-	/*char fileName[256],str[8];
-	int i;
-	
-	for(i=1;i<200;i++)
-		{
-			strcpy(fileName,"");
-			strcat(fileName,getenv("ENSDF"));
-			if(i<10)
-				strcat(fileName,"ensdf.00");
-			else if(i<100)
-				strcat(fileName,"ensdf.0");
-			else
-				strcat(fileName,"ensdf.");
-			sprintf(str,"%i",i);
-			strcat(fileName,str);
-			readENSDFFile(fileName,gd); //grab data from the ENSDF file (see parse_ENSDF.c)
-		}*/
+	writeDataFile(p);
 
   return 0; //great success
 }
