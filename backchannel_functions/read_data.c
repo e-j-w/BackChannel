@@ -13,7 +13,7 @@ int readMCA(FILE * inp, const char * filename, double outHist[NSPECT][S32K])
         break;
       }
   fclose(inp);
-  printf("number of spectra in file '%s': %i\n",filename,numSpec);
+  //printf("number of spectra in file '%s': %i\n",filename,numSpec);
 	if((inp=fopen(filename,"r"))==NULL) //reopen the file
     {
       printf("ERROR: Cannot open the input file: %s\n",filename);

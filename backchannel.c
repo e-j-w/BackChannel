@@ -3,6 +3,7 @@
 //functions and logic
 #include "read_data.c"
 #include "write_data.c"
+#include "read_parameters.c"
 #include "generate_matrix.c"
 
 int main(int argc, char *argv[])
@@ -19,9 +20,9 @@ int main(int argc, char *argv[])
   bc_par *p=(bc_par*)malloc(sizeof(bc_par));
   readParFile(argv[1],p);
   computeWeights(p);
-  printWeights(p);
+  //printWeights(p);
   computeInvWeights(p);
-  printInvWeights(p);
+  //printInvWeights(p);
   
   int i,j,k;
   for(i=0;i<p->numSpectra;i++)
