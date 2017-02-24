@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
   //printWeights(p);
   computeInvWeights(p);
   //printInvWeights(p);
+  printScalingFactors(p);
   
   int i,j,k;
   for(i=0;i<p->numSpectra;i++)

@@ -1,5 +1,5 @@
 SORT_CH 0 2
-EFF 0.4 0.3
+EFF 0.463815664918201 0.31831353822293
 
 GATE_SP 0 1 0p1a.mca
 GATE_SP 0 2 0p2a.mca
@@ -7,6 +7,7 @@ GATE_SP 0 3 0p3a.mca
 GATE_SP 1 2 1p2a.mca
 GATE_SP 2 1 2p1a.mca
 GATE_SP 1 1 1p1a.mca
+GATE_SP 1 0 1p0a.mca
 GATE_SP 2 0 2p0a.mca
 
 OUT_SP 0p2ach.mca

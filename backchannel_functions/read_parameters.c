@@ -99,6 +99,10 @@ void readParFile(const char * fileName, bc_par * p)
 	
 	printf("Parameters read from file: %s\n",fileName);
 	printf("Number of particle types: %i\n",p->numParticles);
+	printf("Particle detection efficiencies: ");
+	for(i=0;i<p->numParticles;i++)
+		printf("%f ",p->eff[i]);
+	printf("\n");
 	printf("Number of gate spectra: %i\n",p->numGateData);
 	printf("Will write output data to file: %s\n",p->outFilename);
   

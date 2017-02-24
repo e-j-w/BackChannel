@@ -127,3 +127,21 @@ void printInvWeights(bc_par * p)
 	for(i=0;i<p->numGateData;i++)
 		printf("%f\n",p->soln[i]);
 }
+
+void printScalingFactors(bc_par * p)
+{
+	int i,j;
+	
+	
+	printf("Sorted data for channel [");
+	for(i=0;i<p->numParticles;i++)
+		printf(" %i ",p->sortCh[i]);
+	printf("].\n");
+	for(i=0;i<p->numGateData;i++)
+		{
+			printf("Spectrum with gate [");
+			for(j=0;j<p->numParticles;j++)
+				printf(" %i ",p->gateData[i].gateCh[j]);
+			printf("] is scaled by a factor of %f\n",p->soln[i]);
+		}
+}

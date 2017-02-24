@@ -37,7 +37,7 @@ void writeDataFile(bc_par * p)
       exit(-1);
 		}
 	
-	printf("Output spectra written to file: %s\n",p->outFilename);
+	printf("Output data written to file: %s\n",p->outFilename);
 	
 	fclose(out);
 }
